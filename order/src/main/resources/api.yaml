@@ -1,0 +1,74 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8090
+    description: Generated server url
+paths:
+  /api/orderhistories/{id}:
+    put:
+      tags:
+        - order-history-controller-write
+      operationId: updateOrderHistory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeliveryStatusRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/OrderHistory'
+  /api/orderhistories:
+    post:
+      tags:
+        - order-history-controller-write
+      operationId: createOrderHistory
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderHistory'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/OrderHistory'
+components:
+  schemas:
+    DeliveryStatusRequest:
+      type: object
+      properties:
+        deliveryStatus:
+          type: string
+    OrderHistory:
+      type: object
+      properties:
+        orderId:
+          type: integer
+          format: int64
+        customerName:
+          type: string
+        courierName:
+          type: string
+        deliveryStatus:
+          type: string
+        productNames:
+          type: string
+        totalPrice:
+          type: number
